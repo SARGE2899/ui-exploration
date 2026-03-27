@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UI Concepts — Product Design</title>
+  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #F2F2F7;
+      --bg-secondary: #FFFFFF;
+      --surface: #FFFFFF;
+      --surface-secondary: rgba(255,255,255,0.72);
+      --surface-grouped: #F2F2F7;
+      --ink: #000000;
+      --ink-secondary: rgba(60,60,67,0.6);
+      --ink-tertiary: rgba(60,60,67,0.3);
+      --ink-quaternary: rgba(60,60,67,0.18);
+      --accent: #007AFF;
+      --accent-soft: rgba(0,122,255,0.1);
+      --destructive: #FF3B30;
+      --destructive-soft: rgba(255,59,48,0.1);
+      --success: #34C759;
+      --success-soft: rgba(52,199,89,0.1);
+      --separator: rgba(60,60,67,0.12);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.05);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, 'SF Pro Display', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 64px 20px 32px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 6vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--ink-secondary);
+      max-width: 460px;
+      line-height: 1.55;
+    }
+
+    /* ── PROGRESS CAPSULES ── */
+    .progress-strip {
+      display: flex;
+      gap: 5px;
+      padding: 0 20px;
+      max-width: 680px;
+      margin: 0 auto 40px;
+    }
+    .progress-strip span {
+      height: 4px;
+      flex: 1;
+      border-radius: 4px;
+      background: var(--ink-quaternary);
+      transition: background 0.3s;
+    }
+    .progress-strip span.active { background: var(--accent); }
+
+    /* ── MAIN LAYOUT ── */
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 20px 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink-secondary);
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+
+    /* ── CONCEPT CARD (iOS grouped list style) ── */
+    .concept-card {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      padding: 20px 20px 20px;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s;
+      overflow: hidden;
+    }
+    .concept-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .concept-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .concept-title {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 5px;
+      line-height: 1.3;
+    }
+
+    .concept-explain {
+      font-size: 14px;
+      color: var(--ink-secondary);
+      margin-bottom: 20px;
+      line-height: 1.55;
+    }
+
+    .demo-area {
+      background: var(--bg);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .demo-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-tertiary);
+      margin-bottom: 4px;
+    }
+
+    .inline-note {
+      font-size: 12px;
+      color: var(--ink-tertiary);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(28,28,30,0.92);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 11px 20px;
+      border-radius: 100px;
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+      z-index: 1000;
+      white-space: nowrap;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.22);
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ═══════════════════════════════
+       BUTTONS — iOS Style
+    ═══════════════════════════════ */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 100px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-primary:active { transform: scale(0.96); opacity: 0.8; }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: rgba(116,116,128,0.12);
+      color: var(--accent);
+      border: none;
+      padding: 12px 22px;
+      border-radius: 100px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-secondary:hover { background: rgba(116,116,128,0.18); }
+    .btn-secondary:active { transform: scale(0.96); }
+
+    .btn-danger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--destructive-soft);
+      color: var(--destructive);
+      border: none;
+      padding: 12px 22px;
+      border-radius: 100px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-danger:hover { background: rgba(255,59,48,0.16); }
+    .btn-danger:active { transform: scale(0.96); }
+
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: rgba(116,116,128,0.12);
+      border: none;
+      border-radius: 50%;
+      font-size: 17px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-icon:hover { background: rgba(116,116,128,0.2); }
+    .btn-icon:active { transform: scale(0.9); }
+
+    .btn-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+    /* ═══════════════════════════════
+       FORMS — iOS Style
+    ═══════════════════════════════ */
+    .field { display: flex; flex-direction: column; gap: 5px; }
+
+    .field label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      padding-left: 2px;
+    }
+
+    .field input, .field select, .field textarea {
+      background: var(--surface);
+      border: 1.5px solid var(--separator);
+      border-radius: var(--radius-md);
+      padding: 11px 14px;
+      font-family: inherit;
+      font-size: 16px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3.5px var(--accent-soft);
+    }
+    .field textarea { resize: vertical; min-height: 88px; }
+    .field .hint { font-size: 12px; color: var(--ink-tertiary); padding-left: 2px; }
+    .field .error-msg { font-size: 12px; color: var(--destructive); display: none; padding-left: 2px; }
+    .field.has-error input { border-color: var(--destructive); box-shadow: 0 0 0 3.5px var(--destructive-soft); }
+    .field.has-error .error-msg { display: block; }
+
+    /* iOS-style list rows */
+    .ios-list {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .ios-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 16px;
+      gap: 12px;
+      border-bottom: 1px solid var(--separator);
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    .ios-row:last-child { border-bottom: none; }
+    .ios-row:active { background: rgba(60,60,67,0.06); }
+    .ios-row-label {
+      font-size: 16px;
+      color: var(--ink);
+      flex: 1;
+    }
+    .ios-row-detail {
+      font-size: 15px;
+      color: var(--ink-secondary);
+    }
+    .ios-chevron {
+      font-size: 14px;
+      color: var(--ink-tertiary);
+      margin-left: 4px;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .checkbox-row input[type="checkbox"] {
+      margin-top: 2px;
+      width: 20px;
+      height: 20px;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+      border-radius: 6px;
+    }
+    .checkbox-row span { font-size: 15px; color: var(--ink); }
+
+    .radio-group { display: flex; flex-direction: column; gap: 0; background: var(--surface); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
+    .radio-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 16px;
+      gap: 10px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--separator);
+      transition: background 0.12s;
+    }
+    .radio-row:last-child { border-bottom: none; }
+    .radio-row:active { background: rgba(60,60,67,0.06); }
+    .radio-row input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--accent);
+      order: 2;
+    }
+    .radio-row span { font-size: 15px; color: var(--ink); flex: 1; }
+
+    /* iOS Toggle */
+    .toggle-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .toggle {
+      position: relative;
+      width: 51px;
+      height: 31px;
+      flex-shrink: 0;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: rgba(120,120,128,0.2);
+      border-radius: 31px;
+      cursor: pointer;
+      transition: background 0.25s;
+    }
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 27px;
+      height: 27px;
+      left: 2px;
+      top: 2px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.25s cubic-bezier(0.34, 1.2, 0.64, 1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.22), 0 1px 2px rgba(0,0,0,0.12);
+    }
+    .toggle input:checked + .toggle-slider { background: var(--success); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+    .toggle-label { font-size: 16px; color: var(--ink); flex: 1; }
+
+    /* Settings list row style for toggles */
+    .settings-list { background: var(--surface); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--separator);
+      gap: 12px;
+    }
+    .settings-row:last-child { border-bottom: none; }
+    .settings-row-left { display: flex; flex-direction: column; gap: 1px; }
+    .settings-row-title { font-size: 16px; color: var(--ink); }
+    .settings-row-sub { font-size: 12px; color: var(--ink-secondary); }
+
+    /* Range Slider */
+    .range-wrap { display: flex; flex-direction: column; gap: 8px; }
+    .range-header { display: flex; align-items: center; justify-content: space-between; }
+    .range-title { font-size: 15px; color: var(--ink); }
+    .range-val { font-size: 15px; font-weight: 600; color: var(--accent); }
+    .range-wrap input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 4px;
+      background: var(--ink-quaternary);
+      outline: none;
+      cursor: pointer;
+    }
+    .range-wrap input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2), 0 1px 3px rgba(0,0,0,0.1);
+      border: 0.5px solid rgba(0,0,0,0.08);
+    }
+
+    /* ═══════════════════════════════
+       IMAGES & MEDIA
+    ═══════════════════════════════ */
+    .img-demo {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--bg);
+      box-shadow: var(--shadow-sm);
+    }
+    .img-placeholder {
+      width: 100%;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--ink-tertiary);
+      font-size: 13px;
+      background: linear-gradient(160deg, #e5e5ea 0%, #d1d1d6 100%);
+    }
+    .img-icon { font-size: 36px; line-height: 1; }
+    .img-caption {
+      font-size: 12px;
+      color: var(--ink-secondary);
+      padding: 10px 14px;
+      background: var(--surface);
+      border-top: 1px solid var(--separator);
+    }
+
+    .avatar-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .avatar {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #fff;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .avatar.lg { width: 60px; height: 60px; font-size: 22px; background: var(--accent); }
+    .avatar.md { width: 44px; height: 44px; font-size: 14px; background: #5AC8FA; }
+    .avatar.sm { width: 28px; height: 28px; font-size: 10px; background: #34C759; }
+
+    .avatar-stack { display: flex; }
+    .avatar-stack .avatar { margin-left: -10px; border: 2.5px solid var(--surface); }
+    .avatar-stack .avatar:first-child { margin-left: 0; }
+
+    .video-placeholder {
+      width: 100%;
+      height: 200px;
+      background: #1c1c1e;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: opacity 0.15s;
+    }
+    .video-placeholder:active { opacity: 0.85; }
+    .play-btn {
+      width: 56px;
+      height: 56px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: #fff;
+      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(255,255,255,0.22);
+    }
+    .video-label { font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 500; }
+
+    /* ═══════════════════════════════
+       NAVIGATION
+    ═══════════════════════════════ */
+    .nav-demo {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .topnav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--separator);
+    }
+    .topnav-logo {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .topnav-links { display: flex; gap: 20px; }
+    .topnav-links a {
+      text-decoration: none;
+      font-size: 15px;
+      color: var(--ink-secondary);
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .topnav-links a:hover, .topnav-links a.active { color: var(--accent); }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 18px;
+      font-size: 14px;
+      color: var(--ink-secondary);
+      border-bottom: 1px solid var(--separator);
+    }
+    .breadcrumb a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb .sep { color: var(--ink-tertiary); font-size: 13px; }
+
+    /* iOS Segmented Control */
+    .segmented-wrap {
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--separator);
+    }
+    .segmented-control {
+      display: flex;
+      background: rgba(120,120,128,0.12);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+      gap: 2px;
+    }
+    .seg-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-radius: 7px;
+      padding: 7px 10px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: -0.01em;
+    }
+    .seg-btn.active {
+      background: var(--surface);
+      color: var(--ink);
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.06);
+    }
+    .tab-content {
+      padding: 16px 18px;
+      font-size: 14px;
+      color: var(--ink-secondary);
+      line-height: 1.55;
+    }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 16px 18px;
+    }
+    .page-btn {
+      min-width: 36px;
+      height: 36px;
+      padding: 0 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      border: 1.5px solid var(--separator);
+      background: var(--surface);
+      color: var(--accent);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .page-btn:hover { background: var(--accent-soft); border-color: var(--accent); }
+    .page-btn.current { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    .sidenav { display: flex; }
+    .sidenav-list {
+      padding: 8px;
+      border-right: 1px solid var(--separator);
+      min-width: 152px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .sidenav-item {
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sidenav-item::before {
+      content: attr(data-icon);
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+    }
+    .sidenav-item:hover { background: rgba(60,60,67,0.06); color: var(--ink); }
+    .sidenav-item.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+    .sidenav-main { padding: 18px; font-size: 14px; color: var(--ink-secondary); flex: 1; line-height: 1.55; }
+
+    /* ── FOOTER ── */
+    footer {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 20px 56px;
+      border-top: 1px solid var(--separator);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--ink-tertiary);
+      font-size: 12px;
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .concept-card {
+      animation: fadeUp 0.4s ease both;
+    }
+    section:nth-child(1) .concept-card:nth-child(2) { animation-delay: 0.06s; }
+    section:nth-child(1) .concept-card:nth-child(3) { animation-delay: 0.12s; }
+    section:nth-child(1) .concept-card:nth-child(4) { animation-delay: 0.18s; }
+
+    @media (max-width: 600px) {
+      header, main, .progress-strip, footer { padding-left: 16px; padding-right: 16px; }
+      .topnav-links { gap: 14px; }
+      .topnav-links a { font-size: 13px; }
+      .sidenav-list { min-width: 120px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<header>
+  <p class="eyebrow">Product Design · UI Concepts</p>
+  <h1>Understanding<br>User Interfaces</h1>
+  <p class="subtitle">Every element on a webpage has a name, a role, and a behaviour. Interact with each one below to see exactly what it does — and why it exists.</p>
+</header>
+
+<div class="progress-strip">
+  <span class="active"></span>
+  <span class="active"></span>
+  <span class="active"></span>
+  <span></span>
+</div>
+
+<main>
+
+  <!-- ═══ SECTION 1: BUTTONS ═══ -->
+  <section>
+    <p class="section-label">01 — Buttons &amp; Clicks</p>
+
+    <div class="concept-card">
+      <span class="concept-tag">Primary Action</span>
+      <h2 class="concept-title">Click here to trigger the main action on a page</h2>
+      <p class="concept-explain">The primary button is the most important action. There should only be one per screen. Used for "Submit", "Sign Up", "Buy Now" — things you want the user to do most.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try it</p>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="toast('✓ Primary action triggered — e.g. form submitted!')">
+            Submit Form
+          </button>
+        </div>
+        <p class="inline-note">The pill shape and blue fill signal iOS's most important action — instantly familiar.</p>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Secondary Action</span>
+      <h2 class="concept-title">Click here to take a less important action</h2>
+      <p class="concept-explain">Secondary buttons sit alongside primary ones. Used for "Cancel", "Go Back", "Save Draft" — actions that are valid but not the main goal.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try it</p>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="toast('✓ Primary — saved successfully')">Save</button>
+          <button class="btn-secondary" onclick="toast('← Going back without saving')">Cancel</button>
+        </div>
+        <p class="inline-note">Paired together, hierarchy is instantly clear — Save is more important than Cancel.</p>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Destructive Action</span>
+      <h2 class="concept-title">Click here to do something that cannot be undone</h2>
+      <p class="concept-explain">Danger buttons warn users before irreversible actions like "Delete Account", "Remove File", or "Clear All". iOS uses red as a universal warning signal.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try it</p>
+        <div class="btn-row">
+          <button class="btn-danger" onclick="toast('⚠ Deletion triggered — this cannot be undone')">Delete Account</button>
+        </div>
+        <p class="inline-note">Real apps show an Action Sheet confirmation before executing — e.g. "Are you sure?"</p>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Icon Button</span>
+      <h2 class="concept-title">Click here to perform a quick action with just an icon</h2>
+      <p class="concept-explain">Icon buttons save space in toolbars and cards. Used for Like, Share, Bookmark, Close. They rely on universally understood symbols — always add a tooltip for clarity.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try them</p>
+        <div class="btn-row">
+          <button class="btn-icon" onclick="toast('♥ Added to favourites')" title="Favourite">♥</button>
+          <button class="btn-icon" onclick="toast('↗ Share link copied')" title="Share">↗</button>
+          <button class="btn-icon" onclick="toast('🔖 Bookmarked')" title="Bookmark">🔖</button>
+          <button class="btn-icon" onclick="toast('✕ Item dismissed')" title="Close">✕</button>
+        </div>
+        <p class="inline-note">Circular shape is the iOS standard for icon-only buttons in toolbars and navigation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 2: FORMS ═══ -->
+  <section>
+    <p class="section-label">02 — Forms &amp; Inputs</p>
+
+    <div class="concept-card">
+      <span class="concept-tag">Text Input</span>
+      <h2 class="concept-title">Click here to type a single line of text</h2>
+      <p class="concept-explain">The most common form element. Used for names, emails, search, passwords. Notice the blue ring when focused — the iOS focus indicator tells the user "I am active here."</p>
+      <div class="demo-area">
+        <p class="demo-label">Try it — tap inside and type</p>
+        <div class="field">
+          <label for="name-input">Your full name</label>
+          <input id="name-input" type="text" placeholder="e.g. Alex Morgan" />
+          <p class="hint">Hint text below the input gives extra guidance.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Textarea</span>
+      <h2 class="concept-title">Click here to type multiple lines of text</h2>
+      <p class="concept-explain">When you need more than one line — like a message, bio, or notes. Users can drag the bottom-right corner to resize. Real apps often show a character count.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try it — type and resize</p>
+        <div class="field">
+          <label for="bio-input">About you</label>
+          <textarea id="bio-input" placeholder="Write a short bio..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Dropdown Select</span>
+      <h2 class="concept-title">Click here to choose one option from a list</h2>
+      <p class="concept-explain">Dropdowns keep long lists tidy. Used for country, category, month. Best when there are 5–15 choices. On iOS, this opens a native picker wheel.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try it</p>
+        <div class="field">
+          <label for="role-select">Your role</label>
+          <select id="role-select" onchange="toast('Selected: ' + this.options[this.selectedIndex].text)">
+            <option value="">Choose a role…</option>
+            <option>Product Designer</option>
+            <option>Frontend Developer</option>
+            <option>Product Manager</option>
+            <option>UX Researcher</option>
+            <option>Founder</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Checkbox</span>
+      <h2 class="concept-title">Click here to turn an option on or off</h2>
+      <p class="concept-explain">Checkboxes are for yes/no choices or selecting multiple items from a list. Key difference from radio buttons: you can check many at once.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try checking multiple</p>
+        <label class="checkbox-row"><input type="checkbox" onchange="toast(this.checked ? '✓ Email notifications on' : 'Email notifications off')"><span>Email me product updates</span></label>
+        <label class="checkbox-row"><input type="checkbox" onchange="toast(this.checked ? '✓ SMS alerts on' : 'SMS alerts off')"><span>Send me SMS alerts</span></label>
+        <label class="checkbox-row" style="margin-top:2px"><input type="checkbox" onchange="toast(this.checked ? '✓ Agreed to terms' : 'Terms unchecked')"><span>I agree to the Terms &amp; Conditions</span></label>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Radio Button</span>
+      <h2 class="concept-title">Click here to select exactly one option from a group</h2>
+      <p class="concept-explain">Radio buttons enforce a single choice. Used for plan selection, payment method. Selecting one automatically deselects the others — unlike checkboxes.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try selecting one</p>
+        <div class="radio-group">
+          <label class="radio-row"><input type="radio" name="plan" value="free" onchange="toast('Plan: Free selected')"><span>Free — 5 projects</span></label>
+          <label class="radio-row"><input type="radio" name="plan" value="pro" onchange="toast('Plan: Pro selected')"><span>Pro — Unlimited projects · $4.99/mo</span></label>
+          <label class="radio-row"><input type="radio" name="plan" value="team" onchange="toast('Plan: Team selected')"><span>Team — Collaboration · $12.99/mo</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Toggle Switch</span>
+      <h2 class="concept-title">Click here to instantly switch a setting on or off</h2>
+      <p class="concept-explain">iOS toggles are the gold standard — they apply changes immediately, no Save needed. Used in Settings for Dark Mode, Notifications, Do Not Disturb.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try flipping</p>
+        <div class="settings-list">
+          <div class="settings-row">
+            <div class="settings-row-left">
+              <span class="settings-row-title">Dark Mode</span>
+              <span class="settings-row-sub">Changes app appearance</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" onchange="toast(this.checked ? '🌙 Dark mode enabled' : '☀ Dark mode disabled')">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-left">
+              <span class="settings-row-title">Push Notifications</span>
+              <span class="settings-row-sub">Banners, sounds, badges</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked onchange="toast(this.checked ? '🔔 Notifications on' : '🔕 Notifications off')">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <p class="inline-note">Green = on. This exact pattern is used throughout iOS Settings.</p>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Range Slider</span>
+      <h2 class="concept-title">Drag here to pick a value within a range</h2>
+      <p class="concept-explain">Sliders let users set a value between a min and max. Used for volume, brightness, price filters. The large thumb target follows iOS's touch accessibility guidelines.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try dragging</p>
+        <div class="range-wrap">
+          <div class="range-header">
+            <span class="range-title">Budget</span>
+            <span class="range-val" id="budget-val">$40,000</span>
+          </div>
+          <input type="range" min="0" max="100" value="40" id="budget-slider"
+            oninput="document.getElementById('budget-val').textContent='$' + (this.value * 1000).toLocaleString('en-US')">
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Form Validation</span>
+      <h2 class="concept-title">Click Submit to see what happens when a field is wrong</h2>
+      <p class="concept-explain">Validation catches errors before they cause problems. Red borders + inline messages guide users to fix issues. Done well, it's helpful — not punishing.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try submitting empty</p>
+        <div class="field" id="email-field">
+          <label for="email-input">Email address</label>
+          <input id="email-input" type="email" placeholder="you@example.com" />
+          <p class="error-msg">Please enter a valid email address.</p>
+        </div>
+        <button class="btn-primary" style="margin-top:10px;align-self:flex-start" onclick="validateEmail()">Continue →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 3: IMAGES & MEDIA ═══ -->
+  <section>
+    <p class="section-label">03 — Images &amp; Media</p>
+
+    <div class="concept-card">
+      <span class="concept-tag">Hero Image</span>
+      <h2 class="concept-title">The large image at the top that sets the mood of a page</h2>
+      <p class="concept-explain">Hero images are the first visual a user sees. They establish brand tone, context, and emotion. Often paired with a headline and a CTA button on top.</p>
+      <div class="demo-area">
+        <p class="demo-label">Example</p>
+        <div class="img-demo">
+          <div class="img-placeholder">
+            <span class="img-icon">🏔</span>
+            <span>Hero Image — typically full-width, 400–600px tall</span>
+          </div>
+          <div class="img-caption">Alt text: "Mountain landscape at sunrise" — VoiceOver reads this on iOS</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Avatar</span>
+      <h2 class="concept-title">The small circular image that represents a person</h2>
+      <p class="concept-explain">Avatars appear in comments, profiles, nav bars, and messages. When no photo is available, initials are shown. Size communicates importance — larger = more prominent.</p>
+      <div class="demo-area">
+        <p class="demo-label">Sizes &amp; states</p>
+        <div class="avatar-row">
+          <div class="avatar lg">PS</div>
+          <div class="avatar md">AK</div>
+          <div class="avatar sm">RV</div>
+          <span style="font-size:12px;color:var(--ink-tertiary);margin-left:4px">Large · Medium · Small</span>
+        </div>
+        <div style="margin-top:14px">
+          <p style="font-size:12px;color:var(--ink-tertiary);margin-bottom:8px">Avatar stack — showing multiple users in a small space</p>
+          <div class="avatar-stack">
+            <div class="avatar md" style="background:#FF9500">PS</div>
+            <div class="avatar md" style="background:#007AFF">AK</div>
+            <div class="avatar md" style="background:#AF52DE">RV</div>
+            <div class="avatar md" style="background:#8e8e93;font-size:11px">+4</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Thumbnail</span>
+      <h2 class="concept-title">Click here to open the full image or article</h2>
+      <p class="concept-explain">Thumbnails are small preview images used in grids, cards, and lists. They represent content — tapping them opens the full version. iOS adds a subtle zoom animation on tap.</p>
+      <div class="demo-area">
+        <p class="demo-label">Click a thumbnail</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+          <div class="img-placeholder" style="height:88px;border-radius:10px;cursor:pointer;font-size:11px;font-weight:500;" onclick="toast('Opening full image 1…')">🌿<br>Article 1</div>
+          <div class="img-placeholder" style="height:88px;border-radius:10px;cursor:pointer;font-size:11px;font-weight:500;background:linear-gradient(135deg,#c8e6fa,#a8d4f5)" onclick="toast('Opening full image 2…')">🌊<br>Article 2</div>
+          <div class="img-placeholder" style="height:88px;border-radius:10px;cursor:pointer;font-size:11px;font-weight:500;background:linear-gradient(135deg,#ffd6c8,#ffbfa5)" onclick="toast('Opening full image 3…')">🌅<br>Article 3</div>
+        </div>
+        <p class="inline-note">Used in Photos, App Store, and Safari to preview content before opening.</p>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Video Player</span>
+      <h2 class="concept-title">Click here to play a video</h2>
+      <p class="concept-explain">Videos start with a poster thumbnail + play button. This loads fast because the video file isn't downloaded until the user taps play — standard on iOS and the web.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try clicking</p>
+        <div class="video-placeholder" onclick="toast('▶ Video would begin playing — buffering...')">
+          <div class="play-btn">▶</div>
+          <p class="video-label">Product walkthrough · 2:34</p>
+        </div>
+        <p class="inline-note">Native iOS players include scrubber, AirPlay, and Picture-in-Picture controls.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 4: NAVIGATION ═══ -->
+  <section>
+    <p class="section-label">04 — Navigation &amp; Links</p>
+
+    <div class="concept-card">
+      <span class="concept-tag">Top Navigation Bar</span>
+      <h2 class="concept-title">The bar at the top — tap links to move between pages</h2>
+      <p class="concept-explain">The navbar stays visible on every page. It orients the user ("where am I?") and lets them jump anywhere. The active link is blue — iOS's standard for the current selection.</p>
+      <div class="demo-area">
+        <p class="demo-label">Click a nav link</p>
+        <div class="nav-demo">
+          <nav class="topnav">
+            <span class="topnav-logo">Designr</span>
+            <div class="topnav-links">
+              <a href="#" class="active" onclick="switchNav(event,'Home')">Home</a>
+              <a href="#" onclick="switchNav(event,'Work')">Work</a>
+              <a href="#" onclick="switchNav(event,'About')">About</a>
+              <a href="#" onclick="switchNav(event,'Contact')">Contact</a>
+            </div>
+          </nav>
+        </div>
+        <p class="inline-note">Blue = current page. On mobile this collapses into a Tab Bar at the bottom instead.</p>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Breadcrumb</span>
+      <h2 class="concept-title">Click here to navigate back up the page hierarchy</h2>
+      <p class="concept-explain">Breadcrumbs show where you are in a multi-level structure. Common on App Store and Settings. They answer: "How did I get here, and how do I go back?"</p>
+      <div class="demo-area">
+        <p class="demo-label">Try clicking a level</p>
+        <div class="nav-demo">
+          <div class="breadcrumb">
+            <a href="#" onclick="toast('↖ Going to Home');return false">Home</a>
+            <span class="sep">›</span>
+            <a href="#" onclick="toast('↖ Going to Products');return false">Products</a>
+            <span class="sep">›</span>
+            <a href="#" onclick="toast('↖ Going to Design Tools');return false">Design Tools</a>
+            <span class="sep">›</span>
+            <span style="color:var(--ink);font-weight:500">Figma</span>
+          </div>
+        </div>
+        <p class="inline-note">The last item (current page) is plain text — you can't tap it because you're already there.</p>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Segmented Control</span>
+      <h2 class="concept-title">Click a segment to switch between views without leaving the page</h2>
+      <p class="concept-explain">iOS's Segmented Control swaps content instantly in the same space. It's the native alternative to tabs — used in Maps (Map/Transit/Satellite), Photos, and Calendar views.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try switching segments</p>
+        <div class="nav-demo">
+          <div class="segmented-wrap">
+            <div class="segmented-control" id="seg-ctrl">
+              <button class="seg-btn active" onclick="switchSeg(this,'overview')">Overview</button>
+              <button class="seg-btn" onclick="switchSeg(this,'activity')">Activity</button>
+              <button class="seg-btn" onclick="switchSeg(this,'settings')">Settings</button>
+            </div>
+          </div>
+          <div class="tab-content" id="tab-content">
+            You're viewing Overview — summary stats and key info live here.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Pagination</span>
+      <h2 class="concept-title">Click here to move between pages of a long list</h2>
+      <p class="concept-explain">Pagination breaks large datasets into manageable pages. The alternative is infinite scroll — both have trade-offs. iOS often uses infinite scroll; web apps tend to use pagination.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try clicking pages</p>
+        <div class="nav-demo">
+          <div class="pagination">
+            <button class="page-btn" onclick="toast('← Previous page')">←</button>
+            <button class="page-btn" onclick="setPage(this)">1</button>
+            <button class="page-btn current" onclick="setPage(this)">2</button>
+            <button class="page-btn" onclick="setPage(this)">3</button>
+            <button class="page-btn" onclick="toast('...')">…</button>
+            <button class="page-btn" onclick="setPage(this)">12</button>
+            <button class="page-btn" onclick="toast('Next page →')">→</button>
+          </div>
+        </div>
+        <p class="inline-note">The blue filled button (2) = current page. Arrows go forward/back one page at a time.</p>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <span class="concept-tag">Sidebar Navigation</span>
+      <h2 class="concept-title">Click a sidebar item to go to that section of the app</h2>
+      <p class="concept-explain">Sidebar navs are used in iPad and macOS apps — Finder, Mail, Notes, Xcode. They keep all destinations visible so users can jump around quickly without hunting for links.</p>
+      <div class="demo-area">
+        <p class="demo-label">Try clicking sections</p>
+        <div class="nav-demo">
+          <div class="sidenav">
+            <div class="sidenav-list">
+              <div class="sidenav-item active" data-icon="⊞" onclick="switchSide(this,'Dashboard')">Dashboard</div>
+              <div class="sidenav-item" data-icon="◻" onclick="switchSide(this,'Projects')">Projects</div>
+              <div class="sidenav-item" data-icon="↗" onclick="switchSide(this,'Analytics')">Analytics</div>
+              <div class="sidenav-item" data-icon="●" onclick="switchSide(this,'Team')">Team</div>
+              <div class="sidenav-item" data-icon="⚙" onclick="switchSide(this,'Settings')">Settings</div>
+            </div>
+            <div class="sidenav-main" id="side-content">
+              Dashboard — your overview of everything important.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  <span>UI Concepts · Product Design</span>
+  <span>4 sections · 20 components</span>
+</footer>
+
+<script>
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.classList.remove('show'), 2400);
+  }
+
+  function validateEmail() {
+    const field = document.getElementById('email-field');
+    const input = document.getElementById('email-input');
+    const val = input.value.trim();
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    field.classList.toggle('has-error', !valid);
+    if (valid) toast('✓ Valid email — continuing…');
+    else toast('✗ Fix the error above before continuing');
+  }
+
+  function switchNav(e, name) {
+    e.preventDefault();
+    document.querySelectorAll('.topnav-links a').forEach(a => a.classList.remove('active'));
+    e.target.classList.add('active');
+    toast('Navigating to ' + name + '…');
+  }
+
+  const tabContent = {
+    overview: 'You\'re viewing Overview — summary stats and key info live here.',
+    activity: 'Activity — recent actions, notifications, and history appear here.',
+    settings: 'Settings — preferences, account options, and configurations live here.'
+  };
+  function switchSeg(btn, id) {
+    document.querySelectorAll('#seg-ctrl .seg-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-content').textContent = tabContent[id];
+  }
+
+  function setPage(btn) {
+    document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('current'));
+    btn.classList.add('current');
+    toast('Loading page ' + btn.textContent + '…');
+  }
+
+  const sideContent = {
+    Dashboard: 'Dashboard — your overview of everything important.',
+    Projects: 'Projects — all your active and archived projects.',
+    Analytics: 'Analytics — charts, data, and usage metrics.',
+    Team: 'Team — members, roles, and permissions.',
+    Settings: 'Settings — account, billing, and preferences.'
+  };
+  function switchSide(el, name) {
+    document.querySelectorAll('.sidenav-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('side-content').textContent = sideContent[name];
+  }
+</script>
+</body>
+</html>
