@@ -50,4 +50,4 @@ Everything is built from scratch to keep it simple and transparent.
 
 ## Live Demo
 
-https://sarge-code.github.io/ui-exploration/
+https://sarge2899.github.io/ui-exploration/
